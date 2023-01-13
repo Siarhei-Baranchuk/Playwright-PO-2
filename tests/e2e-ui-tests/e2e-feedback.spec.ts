@@ -96,5 +96,6 @@ test.describe("Feedback form", () => {
     await expect(feedbackPage.emailInput).not.toBeEmpty();
     await expect(feedbackPage.subjectInput).not.toBeEmpty();
     await expect(feedbackPage.commentTextArea).toBeEmpty();
+    await expect(feedbackPage.submitButton).toBeVisible();
   });
 });
