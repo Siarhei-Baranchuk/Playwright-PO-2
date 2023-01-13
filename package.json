@@ -1,0 +1,28 @@
+{
+  "name": "testplaywrite",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test-all": "npx playwright test --config=playwright.config.ts --reporter=list",
+    "test-all-headed": "npx playwright test --config=playwright.config.ts --headed --reporter=list",
+    "test-all-report": "npx playwright test --config=playwright.config.ts --reporter=html",
+    "test-api-report": "npx playwright test --config=playwright.config.ts --project=api-tests --reporter=html",
+    "test-e2e-report": "npx playwright test --config=playwright.config.ts --project=e2e-chromium --headed --reporter=list",
+    "test-e2e-firefox": "npx playwright test --config=playwright.config.ts --project=e2e-firefox --headed --reporter=list",
+    "test-e2e-webkit": "npx playwright test --config=playwright.config.ts --project=e2e-webkit --headed --reporter=list",
+    "test-e2e-chrome": "npx playwright test --config=playwright.config.ts --project=e2e-chromium --headed --reporter=list",
+    "test-api": "npx playwright test --config=playwright.config.ts --project=api-tests --reporter=list",
+    "start-jenkins-server": "java -jar jenkins.war -httpPort=8080 --enable-future-java"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@playwright/test": "^1.29.1",
+    "dotenv": "^16.0.3",
+    "prettier": "^2.8.1"
+  },
+  "devDependencies": {
+    "@faker-js/faker": "^7.6.0"
+  }
+}
