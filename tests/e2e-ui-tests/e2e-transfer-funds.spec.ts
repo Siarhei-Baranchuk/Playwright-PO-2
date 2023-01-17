@@ -1,30 +1,18 @@
-import { test, expect } from "@playwright/test";
-import { HomePage } from "../../PageObjects/HomePage";
-import { LoginPage } from "../../PageObjects/LoginPage";
-import { NavBar } from "../../PageObjects/Components/NavBar";
-import { TransferFundsPage } from "../../PageObjects/TransferFundsPage";
+import test, { expect } from "../../fixtures/page-objects";
 import { USER_DATA } from "../../helpers/ui/user-data";
 import { MESSAGES } from "../../helpers/ui/messages";
 
 test.describe("Transfer Funds and Make Payments", () => {
-  let homePage: HomePage;
-  let loginPage: LoginPage;
-  let navBar: NavBar;
-  let transferFundsPage: TransferFundsPage;
+  test.beforeEach(
+    async ({ homePage, navBar, loginPage, transferFundsPage }) => {
+      await homePage.openHP();
+      await navBar.signInButton.click();
+      await loginPage.login(USER_DATA.USER_NAME, USER_DATA.USER_PASSWORD);
+      await transferFundsPage.openTF();
+    },
+  );
 
-  test.beforeEach(async ({ page }) => {
-    homePage = new HomePage(page);
-    loginPage = new LoginPage(page);
-    navBar = new NavBar(page);
-    transferFundsPage = new TransferFundsPage(page);
-
-    await homePage.openHP();
-    await navBar.signInButton.click();
-    await loginPage.login(USER_DATA.USER_NAME, USER_DATA.USER_PASSWORD);
-    await transferFundsPage.openTF();
-  });
-
-  test("Transfer Funds", async ({ page }) => {
+  test("Transfer Funds", async ({ transferFundsPage }) => {
     await expect(
       transferFundsPage.transferMoneyAndMakePaymentsHeading,
     ).toBeVisible();

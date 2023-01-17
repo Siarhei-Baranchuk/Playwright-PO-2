@@ -1,25 +1,12 @@
-import { expect, Locator, Page } from "@playwright/test";
+import { NavBar } from "./Components/NavBar";
 
-export class LoginPage {
-  // Define selectors
-  readonly page: Page;
-  readonly userNameInput: Locator;
-  readonly passwordInput: Locator;
-  readonly submitButton: Locator;
-  readonly errorMessage: Locator;
-  readonly loginForm: Locator;
+export class LoginPage extends NavBar {
+  userNameInput = this.page.locator("#user_login");
+  passwordInput = this.page.locator("#user_password");
+  submitButton = this.page.locator("text=Sign in");
+  errorMessage = this.page.locator(".alert-error");
+  loginForm = this.page.locator("#login_form");
 
-  // Init selectors using constructor
-  constructor(page: Page) {
-    this.page = page;
-    this.userNameInput = page.locator("#user_login");
-    this.passwordInput = page.locator("#user_password");
-    this.submitButton = page.locator("text=Sign in");
-    this.errorMessage = page.locator(".alert-error");
-    this.loginForm = page.locator("#login_form");
-  }
-
-  // Define Login Page methods
   async login(username: string, password: string) {
     await this.userNameInput.type(username);
     await this.passwordInput.type(password);
@@ -28,12 +15,18 @@ export class LoginPage {
 
   async snapshotLoginForm() {
     // await expect(this.loginForm.screenshot()).toMatchSnapshot("login-form.png")
-    await this.loginForm.screenshot({ path: "img/login-form.png"});
-    await this.page.screenshot({ path: "img/fullPageLoginForm.png", fullPage: true });
+    await this.loginForm.screenshot({ path: "img/login-form.png" });
+    await this.page.screenshot({
+      path: "img/fullPageLoginForm.png",
+      fullPage: true,
+    });
   }
 
   async snapshotErrorMessage() {
-    await this.errorMessage.screenshot({path: "img/login-error.png"});
-    await this.page.screenshot({ path: "img/fullPageLoginError.png", fullPage: true });
+    await this.errorMessage.screenshot({ path: "img/login-error.png" });
+    await this.page.screenshot({
+      path: "img/fullPageLoginError.png",
+      fullPage: true,
+    });
   }
 }

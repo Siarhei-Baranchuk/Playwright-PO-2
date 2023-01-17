@@ -1,28 +1,16 @@
-import { expect, Locator, Page } from "@playwright/test";
+import { expect } from "@playwright/test";
 import { URLS } from "../helpers/ui/urls";
+import { NavBar } from "./Components/NavBar";
 
-export class FeedbackPage {
-  readonly page: Page;
-  readonly nameInput: Locator;
-  readonly emailInput: Locator;
-  readonly subjectInput: Locator;
-  readonly commentTextArea: Locator;
-  readonly clearButton: Locator;
-  readonly submitButton: Locator;
-  readonly feedbackTitle: Locator;
-  readonly feedbackMessage: Locator;
-
-  constructor(page: Page) {
-    this.page = page;
-    this.nameInput = page.locator("#name");
-    this.emailInput = page.locator("#email");
-    this.subjectInput = page.locator("#subject");
-    this.commentTextArea = page.locator("#comment");
-    this.clearButton = page.locator("input[name='clear']");
-    this.submitButton = page.locator("input[name='submit']");
-    this.feedbackTitle = page.locator("#feedback-title");
-    this.feedbackMessage = page.getByText("Thank you for your comments")
-  }
+export class FeedbackPage extends NavBar {
+  nameInput = this.page.locator("#name");
+  emailInput = this.page.locator("#email");
+  subjectInput = this.page.locator("#subject");
+  commentTextArea = this.page.locator("#comment");
+  clearButton = this.page.locator("input[name='clear']");
+  submitButton = this.page.locator("input[name='submit']");
+  feedbackTitle = this.page.locator("#feedback-title");
+  feedbackMessage = this.page.getByText("Thank you for your comments");
 
   async openFP() {
     await this.page.goto(URLS.FEEDBACK_PAGE);
@@ -41,4 +29,3 @@ export class FeedbackPage {
     await this.commentTextArea.type(comment);
   }
 }
-

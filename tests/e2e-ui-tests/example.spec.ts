@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test";
+import test, { expect } from "../../fixtures/page-objects";
 import { assertTitle, loadHomePage } from "../../helpers/ui/functions";
 
 // test("Selectors", async ({ page }) => {

@@ -1,25 +1,14 @@
-import { test, expect } from "@playwright/test";
-import { LoginPage } from "../../PageObjects/LoginPage";
-import { HomePage } from "../../PageObjects/HomePage";
-import { NavBar } from "../../PageObjects/Components/NavBar";
+import test, { expect } from "../../fixtures/page-objects";
 import { USER_DATA } from "../../helpers/ui/user-data";
 import { MESSAGES } from "../../helpers/ui/messages";
 
 test.describe("Login / Logout flow test", () => {
-  let loginPage: LoginPage;
-  let homePage: HomePage;
-  let navBar: NavBar;
-
-  test.beforeEach(async ({ page }) => {
-    loginPage = new LoginPage(page);
-    homePage = new HomePage(page);
-    navBar = new NavBar(page);
-
+  test.beforeEach(async ({ homePage, navBar }) => {
     await homePage.openHP();
     await navBar.signInButton.click();
   });
 
-  test("Login / Logout Test", async ({ page }) => {
+  test("Login / Logout Test", async ({ loginPage, homePage, navBar }) => {
     await loginPage.snapshotLoginForm();
     await loginPage.login(USER_DATA.USER_NAME, USER_DATA.USER_PASSWORD);
     await homePage.openHP();
@@ -30,7 +19,7 @@ test.describe("Login / Logout flow test", () => {
   });
 
   test("Negative Login Test with invalid username and password", async ({
-    page,
+    loginPage,
   }) => {
     await loginPage.login(
       USER_DATA.INVALID_USERNAME,
@@ -42,7 +31,7 @@ test.describe("Login / Logout flow test", () => {
     await loginPage.snapshotErrorMessage();
   });
 
-  test("Should not login with entered 'Login' only", async ({ page }) => {
+  test("Should not login with entered 'Login' only", async ({ loginPage }) => {
     await loginPage.userNameInput.type(USER_DATA.USER_NAME);
     await loginPage.submitButton.click();
     await expect(loginPage.errorMessage).toContainText(
@@ -50,7 +39,9 @@ test.describe("Login / Logout flow test", () => {
     );
   });
 
-  test("Should not login with entered 'Password' only", async ({ page }) => {
+  test("Should not login with entered 'Password' only", async ({
+    loginPage,
+  }) => {
     await loginPage.passwordInput.type(USER_DATA.USER_PASSWORD);
     await loginPage.submitButton.click();
     await expect(loginPage.errorMessage).toContainText(

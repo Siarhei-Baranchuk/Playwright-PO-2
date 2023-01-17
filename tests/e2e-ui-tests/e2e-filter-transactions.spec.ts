@@ -1,31 +1,19 @@
-import { test, expect } from "@playwright/test";
-import { HomePage } from "../../PageObjects/HomePage";
-import { LoginPage } from "../../PageObjects/LoginPage";
-import { NavBar } from "../../PageObjects/Components/NavBar";
-import { AccountActivityPage } from "../../PageObjects/AccountActivityPage";
+import test, { expect } from "../../fixtures/page-objects";
 import { USER_DATA } from "../../helpers/ui/user-data";
 import { MESSAGES } from "../../helpers/ui/messages";
 
 test.describe("Filter Transactions. Account Activity tab", () => {
-  let homePage: HomePage;
-  let loginPage: LoginPage;
-  let navBar: NavBar;
-  let accountActivityPage: AccountActivityPage;
-
-  test.beforeEach(async ({ page }) => {
-    homePage = new HomePage(page);
-    loginPage = new LoginPage(page);
-    navBar = new NavBar(page);
-    accountActivityPage = new AccountActivityPage(page);
-
-    await homePage.openHP();
-    await navBar.signInButton.click();
-    await loginPage.login(USER_DATA.USER_NAME, USER_DATA.USER_PASSWORD);
-    await accountActivityPage.openAA();
-  });
+  test.beforeEach(
+    async ({ homePage, navBar, loginPage, accountActivityPage }) => {
+      await homePage.openHP();
+      await navBar.signInButton.click();
+      await loginPage.login(USER_DATA.USER_NAME, USER_DATA.USER_PASSWORD);
+      await accountActivityPage.openAA();
+    },
+  );
 
   test("Verify results fot each account. Show Transactions tab.", async ({
-    page,
+    accountActivityPage,
   }) => {
     await accountActivityPage.accountId.selectOption("2");
     await expect(accountActivityPage.accountTableContent).toHaveCount(3);
@@ -42,7 +30,7 @@ test.describe("Filter Transactions. Account Activity tab", () => {
     ).toContainText(MESSAGES.NO_RESULT_MESSAGE);
   });
 
-  test("Find Transactions. Type Deposit.", async ({ page }) => {
+  test("Find Transactions. Type Deposit.", async ({ accountActivityPage }) => {
     await accountActivityPage.findTransactionsTabLink.click();
     await expect(
       accountActivityPage.accountActivityFindTransactionsTabHeading,

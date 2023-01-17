@@ -1,44 +1,25 @@
-import { expect, Locator, Page } from "@playwright/test";
+import { expect, Page } from "@playwright/test";
 
 export class NavBar {
-  readonly page: Page;
-  readonly signInButton: Locator;
-  readonly searchInput: Locator;
-  readonly searchResultsTitle: Locator;
-  readonly numberOfSearchResults: Locator;
-  readonly searchResults: Locator;
-  readonly noSearchResults: Locator;
-  readonly userProfileDropdown: Locator;
-  readonly logoutLink: Locator;
+  signInButton = this.page.locator("#signin_button");
+  searchInput = this.page.locator("#searchTerm");
+  searchResultsTitle = this.page.locator("text=Search Results:");
+  numberOfSearchResults = this.page.locator("li > a");
+  searchResults = this.page.getByText(
+    "The following pages were found for the query:",
+  );
+  noSearchResults = this.page.getByText("No results were found for the query:");
+  userProfileDropdown = this.page.locator("text=username");
+  logoutLink = this.page.locator("#logout_link");
+  accountSummaryTab = this.page.locator("#account_summary_tab");
+  accountActivityTab = this.page.locator("#account_activity_tab");
+  transferFundsTab = this.page.locator("#transfer_funds_tab");
+  payBillsTab = this.page.locator("#pay_bills_tab");
+  myMoneyAppTab = this.page.locator("#money_map_tab");
+  onlineStatementsTab = this.page.locator("#online_statements_tab");
 
-  readonly accountSummaryTab: Locator;
-  readonly accountActivityTab: Locator;
-  readonly transferFundsTab: Locator;
-  readonly payBillsTab: Locator;
-  readonly myMoneyAppTab: Locator;
-  readonly onlineStatementsTab: Locator;
-
-  constructor(page: Page) {
+  constructor(public readonly page: Page) {
     this.page = page;
-    this.signInButton = page.locator("#signin_button");
-    this.searchInput = page.locator("#searchTerm");
-    this.searchResultsTitle = page.locator("text=Search Results:");
-    this.numberOfSearchResults = page.locator("li > a");
-    this.searchResults = page.getByText(
-      "The following pages were found for the query:",
-    );
-    this.noSearchResults = page.getByText(
-      "No results were found for the query:",
-    );
-    this.userProfileDropdown = page.locator("text=username");
-    this.logoutLink = page.locator("#logout_link");
-
-    this.accountSummaryTab = page.locator("#account_summary_tab");
-    this.accountActivityTab = page.locator("#account_activity_tab");
-    this.transferFundsTab = page.locator("#transfer_funds_tab");
-    this.payBillsTab = page.locator("#pay_bills_tab");
-    this.myMoneyAppTab = page.locator("#money_map_tab");
-    this.onlineStatementsTab = page.locator("#online_statements_tab");
   }
 
   async searchFor(value: string) {

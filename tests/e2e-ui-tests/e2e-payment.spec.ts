@@ -1,30 +1,16 @@
-import { test, expect } from "@playwright/test";
-import { HomePage } from "../../PageObjects/HomePage";
-import { LoginPage } from "../../PageObjects/LoginPage";
-import { NavBar } from "../../PageObjects/Components/NavBar";
-import { PayBillsPage } from "../../PageObjects/PayBillsPage";
+import test, { expect } from "../../fixtures/page-objects";
 import { USER_DATA } from "../../helpers/ui/user-data";
 import { MESSAGES } from "../../helpers/ui/messages";
 
 test.describe("New Payment. Pay Bills tab.", () => {
-  let homePage: HomePage;
-  let loginPage: LoginPage;
-  let navBar: NavBar;
-  let payBillsPage: PayBillsPage;
-
-  test.beforeEach(async ({ page }) => {
-    homePage = new HomePage(page);
-    loginPage = new LoginPage(page);
-    navBar = new NavBar(page);
-    payBillsPage = new PayBillsPage(page);
-
+  test.beforeEach(async ({ homePage, navBar, loginPage, payBillsPage }) => {
     await homePage.openHP();
     await navBar.signInButton.click();
     await loginPage.login(USER_DATA.USER_NAME, USER_DATA.USER_PASSWORD);
     await payBillsPage.openPB();
   });
 
-  test("Send new Payment (Pay Saved Payee)", async ({ page }) => {
+  test("Send new Payment (Pay Saved Payee)", async ({ payBillsPage }) => {
     await expect(payBillsPage.paySavedPayeeTabHeading).toBeVisible();
     // exist: payeeValueApple, payeeValueSprint,
     // payeeValueBankOfAmerica, payeeValueWellsFargo
@@ -46,7 +32,7 @@ test.describe("New Payment. Pay Bills tab.", () => {
     );
   });
 
-  test("Add New Payee", async ({ page }) => {
+  test("Add New Payee", async ({ payBillsPage }) => {
     await payBillsPage.addNewPayeeTab.click();
     await expect(payBillsPage.addNewPayeeTabHeading).toBeVisible();
 
@@ -61,7 +47,7 @@ test.describe("New Payment. Pay Bills tab.", () => {
     );
   });
 
-  test("Purchase Foreign Currency", async ({ page }) => {
+  test("Purchase Foreign Currency", async ({ payBillsPage }) => {
     await payBillsPage.purchaseForeignCurrencyTabHeading.click();
     await payBillsPage.currencySelectOption.selectOption("EUR");
     await expect(payBillsPage.sellRateMessage).toHaveText(
