@@ -1,6 +1,7 @@
 import test, { expect } from "../../fixtures/page-objects";
 import { USER_DATA } from "../../helpers/ui/user-data";
 import { MESSAGES } from "../../helpers/ui/messages";
+import { waitForApiResponse } from "../../helpers/api/intercept";
 
 test.describe("Login / Logout flow test", () => {
   test.beforeEach(async ({ homePage, navBar }) => {
@@ -8,10 +9,22 @@ test.describe("Login / Logout flow test", () => {
     await navBar.signInButton.click();
   });
 
-  test("Login / Logout Test", async ({ loginPage, homePage, navBar }) => {
+  test("Login / Logout Test", async ({
+    loginPage,
+    homePage,
+    navBar,
+    page,
+  }) => {
     await loginPage.snapshotLoginForm();
+
     await loginPage.login(USER_DATA.USER_NAME, USER_DATA.USER_PASSWORD);
     await homePage.openHP();
+    // await waitForApiResponse(
+    //   page,
+    //   "http://zero.webappsecurity.com/login.html",
+    //   "302 Found",
+    // );
+
     await expect(navBar.userProfileDropdown).toBeVisible();
 
     await navBar.logout();

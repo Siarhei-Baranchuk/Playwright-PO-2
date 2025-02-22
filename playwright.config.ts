@@ -4,6 +4,12 @@ const config: PlaywrightTestConfig = {
   timeout: 60000,
   retries: 0,
   // testDir: "tips",
+  reporter: [
+      ['dot'], 
+      ['list'],
+      ['html'],
+      ['allure-playwright', {outputFolder: "allure-results"}],
+    ],
   use: {
     headless: true,
     // viewport: { width: 1980, height: 1080 },

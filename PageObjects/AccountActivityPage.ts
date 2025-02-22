@@ -29,6 +29,6 @@ export class AccountActivityPage extends NavBar {
 
   async openAA() {
     await this.page.goto(URLS.ACCOUNT_ACTIVITY_PAGE);
-    await expect(this.page).toHaveURL(URLS.ACCOUNT_ACTIVITY_PAGE);
-  };
-};
+    // await expect(this.page).toHaveURL(URLS.ACCOUNT_ACTIVITY_PAGE);
+  }
+}

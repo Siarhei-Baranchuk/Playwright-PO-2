@@ -6,7 +6,7 @@ require("dotenv").config();
 //   await page.goto(`${process.env.ENV_BASE_URl}${path}`);
 // }
 
-export const BASE_URL = process.env.ENV_BASE_URL;
+export const BASE_URL = process.env.ENV_BASE_URl;
 
 export const URLS = {
   HOME_PAGE: `${BASE_URL}index.html`,

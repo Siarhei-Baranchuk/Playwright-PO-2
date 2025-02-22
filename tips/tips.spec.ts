@@ -50,6 +50,7 @@ test.describe("Tips and Tricks Section", () => {
     await page3.goto("https://example.com/");
     await page1.waitForTimeout(5000);
   });
+  
   test("Test", async ({ page }) => {
     let newNumber = await generateRandomNumber();
     console.log(newNumber);

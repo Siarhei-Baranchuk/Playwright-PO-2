@@ -1,10 +1,9 @@
-import  test, { expect } from "../../fixtures/page-objects";
+import test, { expect } from "../../fixtures/page-objects";
 import { USER_DATA } from "../../helpers/ui/user-data";
 import { MESSAGES } from "../../helpers/ui/messages";
 import { URLS } from "../../helpers/ui/urls";
 
 test.describe("Feedback form", () => {
-
   test.beforeEach(async ({ page, homePage }) => {
     await homePage.openHP();
     await homePage.feedbackLink.click();
@@ -25,7 +24,7 @@ test.describe("Feedback form", () => {
     await expect(feedbackPage.commentTextArea).toBeEmpty();
   });
 
-  test("Submit feedback form", async ({ page, feedbackPage}) => {
+  test("Submit feedback form", async ({ page, feedbackPage }) => {
     await feedbackPage.fillFeedbackForm(
       USER_DATA.USER_NAME,
       USER_DATA.USER_EMAIL,
@@ -46,7 +45,10 @@ test.describe("Feedback form", () => {
     await expect(feedbackPage.subjectInput).toBeEmpty();
     await expect(feedbackPage.commentTextArea).toBeEmpty();
   });
-  test("Submit feedback form with empty Name", async ({ page, feedbackPage }) => {
+  test("Submit feedback form with empty Name", async ({
+    page,
+    feedbackPage,
+  }) => {
     await feedbackPage.emailInput.type(USER_DATA.USER_EMAIL);
     await feedbackPage.subjectInput.type(MESSAGES.SUBJECT_MESSAGE);
     await feedbackPage.commentTextArea.type(MESSAGES.TEXT_MESSAGE);
@@ -57,7 +59,10 @@ test.describe("Feedback form", () => {
     await expect(feedbackPage.commentTextArea).not.toBeEmpty();
   });
 
-  test("Submit feedback form with empty Email", async ({ page, feedbackPage }) => {
+  test("Submit feedback form with empty Email", async ({
+    page,
+    feedbackPage,
+  }) => {
     await feedbackPage.nameInput.type(USER_DATA.USER_NAME);
     await feedbackPage.subjectInput.type(MESSAGES.SUBJECT_MESSAGE);
     await feedbackPage.commentTextArea.type(MESSAGES.TEXT_MESSAGE);
@@ -68,7 +73,10 @@ test.describe("Feedback form", () => {
     await expect(feedbackPage.commentTextArea).not.toBeEmpty();
   });
 
-  test("Submit feedback form with empty Subject", async ({ page, feedbackPage }) => {
+  test("Submit feedback form with empty Subject", async ({
+    page,
+    feedbackPage,
+  }) => {
     await feedbackPage.nameInput.type(USER_DATA.USER_NAME);
     await feedbackPage.emailInput.type(USER_DATA.USER_EMAIL);
     await feedbackPage.commentTextArea.type(MESSAGES.TEXT_MESSAGE);
@@ -79,7 +87,10 @@ test.describe("Feedback form", () => {
     await expect(feedbackPage.commentTextArea).not.toBeEmpty();
   });
 
-  test("Submit feedback form with empty Comment", async ({ page, feedbackPage }) => {
+  test("Submit feedback form with empty Comment", async ({
+    page,
+    feedbackPage,
+  }) => {
     await feedbackPage.nameInput.type(USER_DATA.USER_NAME);
     await feedbackPage.emailInput.type(USER_DATA.USER_EMAIL);
     await feedbackPage.subjectInput.type(MESSAGES.SUBJECT_MESSAGE);
